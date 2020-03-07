@@ -79,12 +79,17 @@ public class UI_ScoresGraph : MonoBehaviour
         count = val.Count;
         ymax = 1.1f * Mathf.Max( Mathf.Abs((float)val.Max()), Mathf.Abs((float)val.Min()) );
 
-        Vector2 prevPt = new Vector2();
-        for (int i = 0; i < count; i++)
+        float xPos =  0;
+        float yPos = (float)val[0] / ymax * height;
+        Vector2 currPt = new Vector2(xPos, yPos);
+        PlotPoint(currPt);
+        Vector2 prevPt = currPt;
+
+        for (int i = 1; i < count; i++)
         {
-            float xPos =  ((float)(i) / (count-1)) * width;
-            float yPos = (float)val[i] / ymax * height;
-            Vector2 currPt = new Vector2(xPos, yPos);
+            xPos =  ((float)(i) / (count-1)) * width;
+            yPos = (float)val[i] / ymax * height;
+            currPt = new Vector2(xPos, yPos);
             PlotPoint(currPt);
             PlotConnection(prevPt, currPt);
             prevPt = currPt;
