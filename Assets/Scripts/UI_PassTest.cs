@@ -12,10 +12,13 @@ public class UI_PassTest : MonoBehaviour
         scoreText.text = GlobalController.newScore.ToString();
         switch(GlobalController.fromTest) {
             case 1: GlobalController.completedTest1 = true;
+                GlobalController.scoreTest1 = GlobalController.newScore;
                 break;
             case 2: GlobalController.completedTest2 = true;
+                GlobalController.scoreTest2 = GlobalController.newScore;
                 break;
             case 3: GlobalController.completedTest3 = true;
+                GlobalController.scoreTest3 = GlobalController.newScore;
                 break;
         }
     }
