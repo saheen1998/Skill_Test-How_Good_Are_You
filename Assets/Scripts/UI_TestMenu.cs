@@ -12,14 +12,17 @@ public class UI_TestMenu : MonoBehaviour
     public GameObject test3Status;
     public void Test1() {
         SceneManager.LoadScene("Scene_Test1");
+        GlobalController.newScore = 0;
     }
     
     public void Test2() {
         SceneManager.LoadScene("Scene_Test2");
+        GlobalController.newScore = 0;
     }
     
     public void Test3() {
         SceneManager.LoadScene("Scene_Test3");
+        GlobalController.newScore = 0;
     }
     
     public void GoBackToMainMenu() {

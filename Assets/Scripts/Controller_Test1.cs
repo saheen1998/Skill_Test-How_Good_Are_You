@@ -11,7 +11,7 @@ public class Controller_Test1 : MonoBehaviour
     public GameObject holePrefab;
     public Text timeText;
 
-    private int currScore = 0;
+    public int currScore = 0;
     
     void Start()
     {
@@ -41,8 +41,7 @@ public class Controller_Test1 : MonoBehaviour
     }
 
     void OnTriggerEnter() {
-        GlobalController.fromTest = 1;
-        GlobalController.newScore = currScore;
-        SceneManager.LoadScene("Scene_PassTest");
+        GlobalController.newScore += currScore;
+        SceneManager.LoadScene("Scene_Test1");
     }
 }
