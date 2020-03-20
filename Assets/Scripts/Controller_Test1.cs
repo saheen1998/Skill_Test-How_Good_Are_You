@@ -10,6 +10,7 @@ public class Controller_Test1 : MonoBehaviour
     public float playerSpeed = 1;
     public GameObject holePrefab;
     public Text timeText;
+    public Text scoreText;
 
     public int currScore = 0;
     
@@ -28,11 +29,13 @@ public class Controller_Test1 : MonoBehaviour
             player.AddForce(Input.acceleration.x*playerSpeed, 0 , Input.acceleration.y*playerSpeed);
 
         currScore = (int)Mathf.Clamp(100 - Time.timeSinceLevelLoad*5, 0, 100);
+        scoreText.text = GlobalController.newScore.ToString();
         timeText.text = currScore.ToString();
         //Debug.Log(Input.GetAxis("Horizontal")*Time.deltaTime + ", " + Input.GetAxis("Vertical")*Time.deltaTime);
     }
 
     public void RestartLevel() {
+        GlobalController.newScore = 0;
         SceneManager.LoadScene("Scene_Test1");
     }
 

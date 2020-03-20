@@ -15,7 +15,14 @@ public class UI_SignIn : MonoBehaviour
     }
 
     public void Continue() {
-        GlobalController.currUser = usernameField.text;
+        if(passwordField.text == "wisc") {
+            GlobalController.currUser = usernameField.text;
+            SceneManager.LoadScene("Scene_MainMenu");
+        }
+    }
+    
+    public void ContinueAsGuest() {
+        GlobalController.currUser = "Guest";
         SceneManager.LoadScene("Scene_MainMenu");
     }
 }

@@ -28,7 +28,7 @@ public class Controller_Test2 : MonoBehaviour
 
     void FixedUpdate()
     {
-        player.GetComponent<Rigidbody>().AddForce(0, 0, 3 * speedMultiplier);
+        player.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, 14 * speedMultiplier));
         Vector3 pos = player.transform.position;
         pos.y = player.transform.position.y + 2;
         pos.z = player.transform.position.z - 6.5f;
@@ -36,7 +36,7 @@ public class Controller_Test2 : MonoBehaviour
 
         time += Time.deltaTime;
         if(time >= spawnTime) {
-            Instantiate(obstacle, new Vector3(Random.Range(-9.5f, 9.5f), Random.Range(0.5f, 4.5f), player.transform.position.z + 50), Quaternion.identity);
+            Instantiate(obstacle, new Vector3(Random.Range(-9.5f, 9.5f), Random.Range(0.5f, 2.5f), player.transform.position.z + 50), Quaternion.identity);
             time = 0;
             spawnTime = Random.Range(minTime, maxTime);
         }
@@ -44,10 +44,10 @@ public class Controller_Test2 : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             if(EventSystem.current.currentSelectedGameObject.name == "Tap Move Right")
-                player.GetComponent<Rigidbody>().AddForce(3 * speedMultiplier, 0, 0);
+                player.GetComponent<Rigidbody>().AddForce(20 * speedMultiplier, 0, 0);
 
             if(EventSystem.current.currentSelectedGameObject.name == "Tap Move Left")
-                player.GetComponent<Rigidbody>().AddForce(-3 * speedMultiplier, 0, 0);
+                player.GetComponent<Rigidbody>().AddForce(-20 * speedMultiplier, 0, 0);
         }
 
         scoreText.text = GlobalController.newScore.ToString();
@@ -63,6 +63,6 @@ public class Controller_Test2 : MonoBehaviour
 
     public void Jump() {
         if(player.transform.position.y < 0.6f)
-            player.GetComponent<Rigidbody>().AddForce(0, 80, 0);
+            player.GetComponent<Rigidbody>().AddForce(0, 650, 0);
     }
 }
