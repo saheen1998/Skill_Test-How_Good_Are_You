@@ -10,7 +10,7 @@ public class Player_Test2 : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider col) {
-        if(col.tag == "Hole") {
+        if(col.tag == "Obstacle") {
             GlobalController.fromTest = 2;
             SceneManager.LoadScene("Scene_PassTest");
         }

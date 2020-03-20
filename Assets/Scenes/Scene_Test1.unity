@@ -341,7 +341,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7ef7e7bdd5f85214dadfc240add830f1, type: 2}
+  - {fileID: 2100000, guid: 5dedd088f9e4c344f853f54e7dcc7026, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -951,7 +951,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7ef7e7bdd5f85214dadfc240add830f1, type: 2}
+  - {fileID: 2100000, guid: 5dedd088f9e4c344f853f54e7dcc7026, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1044,7 +1044,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7ef7e7bdd5f85214dadfc240add830f1, type: 2}
+  - {fileID: 2100000, guid: 5dedd088f9e4c344f853f54e7dcc7026, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1760,8 +1760,8 @@ GameObject:
   - component: {fileID: 1759148800}
   - component: {fileID: 1759148799}
   m_Layer: 0
-  m_Name: Hole
-  m_TagString: Hole
+  m_Name: Obstacle
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1798,7 +1798,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 62bf2e9f68b4a1f45aeab0cd25f429ec, type: 2}
+  - {fileID: 2100000, guid: e76e5d34647fb3b4395c577632a444e3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

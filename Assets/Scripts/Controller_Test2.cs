@@ -26,6 +26,15 @@ public class Controller_Test2 : MonoBehaviour
         time = 0;
     }
 
+    void Update() {
+
+        if (Input.GetMouseButtonDown(0))
+            if(player.transform.position.y < 0.6f && EventSystem.current.currentSelectedGameObject.name == "Tap Jump")
+                player.GetComponent<Rigidbody>().AddForce(0, 650, 0);
+
+        scoreText.text = GlobalController.newScore.ToString();
+    }
+
     void FixedUpdate()
     {
         player.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, 14 * speedMultiplier));
@@ -40,7 +49,7 @@ public class Controller_Test2 : MonoBehaviour
             time = 0;
             spawnTime = Random.Range(minTime, maxTime);
         }
-
+        
         if (Input.GetMouseButton(0))
         {
             if(EventSystem.current.currentSelectedGameObject.name == "Tap Move Right")
@@ -49,8 +58,6 @@ public class Controller_Test2 : MonoBehaviour
             if(EventSystem.current.currentSelectedGameObject.name == "Tap Move Left")
                 player.GetComponent<Rigidbody>().AddForce(-20 * speedMultiplier, 0, 0);
         }
-
-        scoreText.text = GlobalController.newScore.ToString();
     }
     
     public void RestartLevel() {
@@ -59,10 +66,5 @@ public class Controller_Test2 : MonoBehaviour
 
     public void GoBack() {
         SceneManager.LoadScene("Scene_TestMenu");
-    }
-
-    public void Jump() {
-        if(player.transform.position.y < 0.6f)
-            player.GetComponent<Rigidbody>().AddForce(0, 650, 0);
     }
 }
