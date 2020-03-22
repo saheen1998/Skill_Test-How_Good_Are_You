@@ -4,10 +4,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using UnityEngine.SocialPlatforms;
+using UnityEngine.UI;
+
 public class UI_SignIn : MonoBehaviour
 {
     public TMP_InputField usernameField;
     public TMP_InputField passwordField;
+    public Text mainText;
+    public Text usernameText;
     private TouchScreenKeyboard keyboard;
 
     public void EnterText() {
@@ -19,10 +26,5 @@ public class UI_SignIn : MonoBehaviour
             GlobalController.currUser = usernameField.text;
             SceneManager.LoadScene("Scene_MainMenu");
         }
-    }
-    
-    public void ContinueAsGuest() {
-        GlobalController.currUser = "Guest";
-        SceneManager.LoadScene("Scene_MainMenu");
     }
 }

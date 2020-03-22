@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Controller_Test1 : MonoBehaviour
 {
     public Rigidbody player;
-    public float playerSpeed = 1;
+    public float playerSpeed = 10;
     public GameObject holePrefab;
     public Text timeText;
     public Text scoreText;
@@ -22,16 +22,18 @@ public class Controller_Test1 : MonoBehaviour
 
     void Update()
     {
-        
-        if (Application.isEditor)
-            player.AddForce(Input.GetAxis("Horizontal")*Time.deltaTime*playerSpeed*10, 0 , Input.GetAxis("Vertical")*Time.deltaTime*playerSpeed*10);
-        else
-            player.AddForce(Input.acceleration.x*playerSpeed, 0 , Input.acceleration.y*playerSpeed);
 
         currScore = (int)Mathf.Clamp(100 - Time.timeSinceLevelLoad*5, 0, 100);
         scoreText.text = GlobalController.newScore.ToString();
         timeText.text = currScore.ToString();
         //Debug.Log(Input.GetAxis("Horizontal")*Time.deltaTime + ", " + Input.GetAxis("Vertical")*Time.deltaTime);
+    }
+
+    void FixedUpdate() {
+        if (Application.isEditor)
+            player.AddForce(Input.GetAxis("Horizontal")*playerSpeed, 0 , Input.GetAxis("Vertical")*playerSpeed);
+        else
+            player.AddForce(Input.acceleration.x*playerSpeed*10, 0 , Input.acceleration.y*playerSpeed*10);
     }
 
     public void RestartLevel() {

@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class Controller_Test2 : MonoBehaviour
 {
     public Transform mainCamera;
+    public Transform groundPlane;
     public Text scoreText;
     public GameObject player;
     public GameObject plane1;
@@ -28,9 +29,24 @@ public class Controller_Test2 : MonoBehaviour
 
     void Update() {
 
+        Vector3 pos = player.transform.position;
+        pos.y = player.transform.position.y + 2;
+        pos.z = player.transform.position.z - 6.5f;
+        mainCamera.position = pos;
+        groundPlane.position = new Vector3(0, 0, player.transform.position.z + 20);
+
         if (Input.GetMouseButtonDown(0))
             if(player.transform.position.y < 0.6f && EventSystem.current.currentSelectedGameObject.name == "Tap Jump")
                 player.GetComponent<Rigidbody>().AddForce(0, 650, 0);
+
+        GlobalController.newScore = (int)player.transform.position.z;
+        float change = Time.deltaTime / 10;//player.transform.position.z / 1000000;
+        minTime -= change;
+        minTime = Mathf.Clamp(minTime, 0.05f, 10);
+        maxTime -= change;
+        maxTime = Mathf.Clamp(maxTime, 0.3f, 10);
+        speedMultiplier += change;
+        speedMultiplier = Mathf.Clamp(speedMultiplier, 1, 6);
 
         scoreText.text = GlobalController.newScore.ToString();
     }
@@ -38,10 +54,7 @@ public class Controller_Test2 : MonoBehaviour
     void FixedUpdate()
     {
         player.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, 14 * speedMultiplier));
-        Vector3 pos = player.transform.position;
-        pos.y = player.transform.position.y + 2;
-        pos.z = player.transform.position.z - 6.5f;
-        mainCamera.position = pos;
+        
 
         time += Time.deltaTime;
         if(time >= spawnTime) {

@@ -15,7 +15,7 @@ public class UI_MainMenu : MonoBehaviour
     }
 
     public void ViewScores() {
-        SceneManager.LoadScene("Scores_Graph");
+        SceneManager.LoadScene("Scores_CurrentSession");
     }
 
     public void ChangeUser() {
