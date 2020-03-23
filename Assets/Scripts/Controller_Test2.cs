@@ -11,8 +11,6 @@ public class Controller_Test2 : MonoBehaviour
     public Transform groundPlane;
     public Text scoreText;
     public GameObject player;
-    public GameObject plane1;
-    public GameObject plane2;
     public GameObject obstacle;
 
     public float maxTime = 3;

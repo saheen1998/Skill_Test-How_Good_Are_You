@@ -12,6 +12,7 @@ public class UI_PassTest : MonoBehaviour
     public Text scoreText;
 
     void Start() {
+        Screen.orientation = ScreenOrientation.Portrait;
         scoreText.text = GlobalController.newScore.ToString();
         switch(GlobalController.fromTest) {
             case 1: GlobalController.completedTest1 = true;
@@ -30,6 +31,10 @@ public class UI_PassTest : MonoBehaviour
                 break;
             case 3: GlobalController.completedTest3 = true;
                 GlobalController.scoreTest3 = GlobalController.newScore;
+                if(GlobalController.newScore > GlobalController.highScoreTest3)
+                    GlobalController.highScoreTest3 = GlobalController.newScore;
+                if(GlobalController.currUser != "GUEST")
+                    PlayGamesController.PostToLeaderboardTest3((long)GlobalController.newScore);
                 break;
         }
     }

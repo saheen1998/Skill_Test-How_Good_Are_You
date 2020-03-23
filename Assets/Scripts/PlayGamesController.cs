@@ -16,7 +16,7 @@ public class PlayGamesController : MonoBehaviour {
 
     private void Start()
     {
-        //AuthenticateUser();
+        Screen.orientation = ScreenOrientation.Portrait;
         usernameText.text = "Logged in as " + GlobalController.currUser;
         if(GlobalController.currUser == "GUEST") {
             signOutButton.interactable = false;
@@ -83,6 +83,20 @@ public class PlayGamesController : MonoBehaviour {
     public static void PostToLeaderboardTest2(long newScore)
     {
         Social.ReportScore(newScore, "CgkIx9zkzusWEAIQAQ", (bool success) => {
+            if (success)
+            {
+                Debug.Log("Posted new score to leaderboard");
+            }
+            else
+            {
+                Debug.LogError("Unable to post new score to leaderboard");
+            }
+        });
+    }
+    
+    public static void PostToLeaderboardTest3(long newScore)
+    {
+        Social.ReportScore(newScore, "CgkIx9zkzusWEAIQBQ", (bool success) => {
             if (success)
             {
                 Debug.Log("Posted new score to leaderboard");
