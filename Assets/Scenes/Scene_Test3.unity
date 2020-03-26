@@ -774,7 +774,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fc558b1d8a1b4ba4a84f4aaf48d215c0, type: 2}
+  - {fileID: 2100000, guid: 2dfed9923951c0248b21589c7d8dc918, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1093,6 +1093,13 @@ MonoBehaviour:
     type: 3}
   obstacleEnemy: {fileID: 6552898128085470480, guid: 3c8e20f0ecd8b6c4cadffc1c2e2c5746,
     type: 3}
+  leftWalls:
+  - {fileID: 1477805741}
+  - {fileID: 1265256216}
+  rightWalls:
+  - {fileID: 1895539781}
+  - {fileID: 517679293}
+  scroll: 0
   maxTime: 3
   minTime: 1
   maxEnemyTime: 10
@@ -1185,6 +1192,7 @@ GameObject:
   - component: {fileID: 1120197140}
   - component: {fileID: 1120197139}
   - component: {fileID: 1120197138}
+  - component: {fileID: 1120197143}
   m_Layer: 8
   m_Name: Plane Right
   m_TagString: Untagged
@@ -1283,6 +1291,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1120197143
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120197137}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1265256216
 GameObject:
   m_ObjectHideFlags: 0
@@ -1347,7 +1371,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e2ed729136e7bc54497ce61900679ab6, type: 2}
+  - {fileID: 2100000, guid: 0ce2ba688d44bde4aa9dc86f6bb863d2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1389,6 +1413,7 @@ GameObject:
   - component: {fileID: 1284991701}
   - component: {fileID: 1284991700}
   - component: {fileID: 1284991699}
+  - component: {fileID: 1284991704}
   m_Layer: 8
   m_Name: Plane Left
   m_TagString: Untagged
@@ -1487,6 +1512,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1284991704
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284991698}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1291676059
 GameObject:
   m_ObjectHideFlags: 0
@@ -1696,7 +1737,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e2ed729136e7bc54497ce61900679ab6, type: 2}
+  - {fileID: 2100000, guid: 0ce2ba688d44bde4aa9dc86f6bb863d2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2034,7 +2075,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fc558b1d8a1b4ba4a84f4aaf48d215c0, type: 2}
+  - {fileID: 2100000, guid: 2dfed9923951c0248b21589c7d8dc918, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

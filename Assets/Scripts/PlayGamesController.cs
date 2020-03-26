@@ -17,6 +17,8 @@ public class PlayGamesController : MonoBehaviour {
     private void Start()
     {
         Screen.orientation = ScreenOrientation.Portrait;
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        
         usernameText.text = "Logged in as " + GlobalController.currUser;
         if(GlobalController.currUser == "GUEST") {
             signOutButton.interactable = false;

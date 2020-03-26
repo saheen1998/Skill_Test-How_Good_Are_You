@@ -17,6 +17,10 @@ public class Controller_Test3 : MonoBehaviour
     public GameObject obstacleRight;
     public GameObject obstacleEnemy;
 
+    public List<GameObject> leftWalls;
+    public List<GameObject> rightWalls;
+    public float scroll;
+
     public float maxTime = 3;
     public float minTime = 1;
     public float maxEnemyTime = 10;
@@ -45,15 +49,9 @@ public class Controller_Test3 : MonoBehaviour
     void Update()
     {
         //Left Player
-        Vector3 smoothPos1 = Vector3.Lerp(cameraLeft.position, new Vector3(playerLeft.transform.position.x, 4, playerLeft.transform.position.z - 8), 0.01f);
-        smoothPos1.z = playerLeft.transform.position.z - 8;
-        cameraLeft.position = smoothPos1;
         groundPlaneLeft.position = new Vector3(0, 0, playerLeft.transform.position.z + 20);
 
         //Right Player
-        Vector3 smoothPos2 = Vector3.Lerp(cameraRight.position, new Vector3(playerRight.transform.position.x, 14, playerRight.transform.position.z - 8), 0.01f);
-        smoothPos2.z = playerRight.transform.position.z - 8;
-        cameraRight.position = smoothPos2;
         groundPlaneRight.position = new Vector3(0, 10, playerRight.transform.position.z + 20);
 
         float change = Time.deltaTime / 10;//player.transform.position.z / 1000000;
@@ -74,8 +72,8 @@ public class Controller_Test3 : MonoBehaviour
         maxEnemyTime = Mathf.Clamp(maxEnemyTime, 2, 5);
         enemyTime += Time.deltaTime;
         if(enemyTime >= spawnEnemyTime) {
-            Instantiate(obstacleEnemy, new Vector3(Random.Range(-4.5f, 4.5f), Random.Range(0.5f, 4.5f), playerLeft.transform.position.z + 50), Quaternion.identity);
-            Instantiate(obstacleEnemy, new Vector3(Random.Range(-4.5f, 4.5f), 10 + Random.Range(0.5f, 4.5f), playerRight.transform.position.z + 50), Quaternion.identity);
+            Instantiate(obstacleEnemy, new Vector3(Random.Range(-4.5f, 4.5f), Random.Range(0.5f, 7), playerLeft.transform.position.z + 50), Quaternion.identity);
+            Instantiate(obstacleEnemy, new Vector3(Random.Range(-4.5f, 4.5f), 10 + Random.Range(0.5f, 7), playerRight.transform.position.z + 50), Quaternion.identity);
             enemyTime = 0;
             spawnEnemyTime = Random.Range(minEnemyTime, maxEnemyTime);
         }
@@ -113,31 +111,48 @@ public class Controller_Test3 : MonoBehaviour
                 }
             }
         }
+
+        //Wall Texture Scrolling
+        float velLeft = playerLeft.GetComponent<Rigidbody>().velocity.z;
+        leftWalls[0].GetComponent<Renderer>().material.mainTextureOffset = new Vector2(Time.timeSinceLevelLoad / 10 * velLeft, 0);
+        leftWalls[1].GetComponent<Renderer>().material.mainTextureOffset = new Vector2(-Time.timeSinceLevelLoad / 10 * velLeft, 0);
+        float velRight = playerLeft.GetComponent<Rigidbody>().velocity.z;
+        rightWalls[0].GetComponent<Renderer>().material.mainTextureOffset = new Vector2(Time.timeSinceLevelLoad / 10 * velRight, 0);
+        rightWalls[1].GetComponent<Renderer>().material.mainTextureOffset = new Vector2(-Time.timeSinceLevelLoad / 10 * velRight, 0);
     }
 
     void movePlayerLeft(Vector2 dir) {
         /*dir.x = Mathf.Clamp(dir.x, -100, 100);
         playerLeft.GetComponent<Rigidbody>().AddForce(new Vector3(dir.x * Time.deltaTime * 10, 0, 0));*/
 
-        Vector3 pos = new Vector3(Mathf.Clamp(dir.x / Screen.width * 20, -4.45f, 4.45f), 0.5f + (dir.y / Screen.height * 7), playerLeft.transform.position.z);
+        Vector3 pos = new Vector3(Mathf.Clamp(dir.x / Screen.width * 20, -4.45f, 4.45f), (dir.y / Screen.height * 7), playerLeft.transform.position.z);
         playerLeft.transform.position = pos;
     }
 
     void movePlayerRight(Vector2 dir) {
-        Vector3 pos = new Vector3(Mathf.Clamp(dir.x / Screen.width * 20, -4.45f, 4.45f), 10.5f + (dir.y / Screen.height * 7), playerLeft.transform.position.z);
+        Vector3 pos = new Vector3(Mathf.Clamp(dir.x / Screen.width * 20, -4.45f, 4.45f), 10 + (dir.y / Screen.height * 7), playerLeft.transform.position.z);
         playerRight.transform.position = pos;
     }
 
     void FixedUpdate()
     {
+        //Left Camera
+        Vector3 smoothPos1 = Vector3.Lerp(cameraLeft.position, new Vector3(playerLeft.transform.position.x, 4, playerLeft.transform.position.z - 8), 0.05f);
+        smoothPos1.z = playerLeft.transform.position.z - 8;
+        cameraLeft.position = smoothPos1;
+        //Right Camera
+        Vector3 smoothPos2 = Vector3.Lerp(cameraRight.position, new Vector3(playerRight.transform.position.x, 14, playerRight.transform.position.z - 8), 0.05f);
+        smoothPos2.z = playerRight.transform.position.z - 8;
+        cameraRight.position = smoothPos2;
+
         playerRight.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, 14 * speedMultiplier));
         playerLeft.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, 14 * speedMultiplier));
-        
-
+    
+        //Spawn obstacles
         time += Time.deltaTime;
         if(time >= spawnTime) {
-            Instantiate(obstacleLeft, new Vector3(Random.Range(-4.5f, 4.5f), Random.Range(0.5f, 4.5f), playerLeft.transform.position.z + 50), Quaternion.identity);
-            Instantiate(obstacleRight, new Vector3(Random.Range(-4.5f, 4.5f), 10 + Random.Range(0.5f, 4.5f), playerRight.transform.position.z + 50), Quaternion.identity);
+            Instantiate(obstacleLeft, new Vector3(Random.Range(-4.5f, 4.5f), Random.Range(0.5f, 7), playerLeft.transform.position.z + 50), Quaternion.identity);
+            Instantiate(obstacleRight, new Vector3(Random.Range(-4.5f, 4.5f), 10 + Random.Range(0.5f, 7), playerRight.transform.position.z + 50), Quaternion.identity);
             time = 0;
             spawnTime = Random.Range(minTime, maxTime);
         }

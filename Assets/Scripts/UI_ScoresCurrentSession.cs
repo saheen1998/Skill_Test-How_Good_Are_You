@@ -41,16 +41,16 @@ public class UI_ScoresCurrentSession : MonoBehaviour
     }
 
     public void GoToScoresGraph() {
-        //SceneManager.LoadScene("Scores_Graph");
+        SceneManager.LoadScene("Scores_Graph");
     }
     
     public void GoToScoresLeaderboard() {
         if(GlobalController.currUser != "GUEST")
             PlayGamesController.ShowLeaderboardUI();
         else {
+            infoText.SetActive(true);
             c.a = 1;
             infoTextComp.color = c;
-            infoText.SetActive(true);
         }
         //SceneManager.LoadScene("Scores_Leaderboard");
     }

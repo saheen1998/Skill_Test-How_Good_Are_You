@@ -10,31 +10,28 @@ using UnityEngine.SocialPlatforms;
 public class UI_PassTest : MonoBehaviour
 {
     public Text scoreText;
+    public Text highScoreText;
+    public GameObject infoText;
 
     void Start() {
         Screen.orientation = ScreenOrientation.Portrait;
         scoreText.text = GlobalController.newScore.ToString();
+
+        if(GlobalController.currUser == "GUEST") {
+            infoText.SetActive(true);
+        }
+
         switch(GlobalController.fromTest) {
-            case 1: GlobalController.completedTest1 = true;
-                GlobalController.scoreTest1 = GlobalController.newScore;
-                if(GlobalController.newScore > GlobalController.highScoreTest1)
-                    GlobalController.highScoreTest1 = GlobalController.newScore;
-                if(GlobalController.currUser != "GUEST")
-                    PlayGamesController.PostToLeaderboardTest1((long)GlobalController.newScore);
+            case 1: GlobalController.AddNewScoreTest1(GlobalController.newScore);
+                highScoreText.text = GlobalController.highScoreTest1.ToString();
                 break;
-            case 2: GlobalController.completedTest2 = true;
-                GlobalController.scoreTest2 = GlobalController.newScore;
-                if(GlobalController.newScore > GlobalController.highScoreTest2)
-                    GlobalController.highScoreTest2 = GlobalController.newScore;
-                if(GlobalController.currUser != "GUEST")
-                    PlayGamesController.PostToLeaderboardTest2((long)GlobalController.newScore);
+
+            case 2: GlobalController.AddNewScoreTest2(GlobalController.newScore);
+                highScoreText.text = GlobalController.highScoreTest2.ToString();
                 break;
-            case 3: GlobalController.completedTest3 = true;
-                GlobalController.scoreTest3 = GlobalController.newScore;
-                if(GlobalController.newScore > GlobalController.highScoreTest3)
-                    GlobalController.highScoreTest3 = GlobalController.newScore;
-                if(GlobalController.currUser != "GUEST")
-                    PlayGamesController.PostToLeaderboardTest3((long)GlobalController.newScore);
+
+            case 3: GlobalController.AddNewScoreTest3(GlobalController.newScore);
+                highScoreText.text = GlobalController.highScoreTest3.ToString();
                 break;
         }
     }
@@ -46,7 +43,9 @@ public class UI_PassTest : MonoBehaviour
     public void Restart() {
         GlobalController.newScore = 0;
         switch(GlobalController.fromTest) {
-            case 1: SceneManager.LoadScene("Scene_Test1");
+            case 1: Controller_Test1.numHoles = 30;
+                Controller_Test1.timeMultiplier = 1;
+                SceneManager.LoadScene("Scene_Test1");
                 break;
             case 2: SceneManager.LoadScene("Scene_Test2");
                 break;

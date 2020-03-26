@@ -10,19 +10,22 @@ public class UI_TestMenu : MonoBehaviour
     public GameObject test1Status;
     public GameObject test2Status;
     public GameObject test3Status;
+
     public void Test1() {
-        SceneManager.LoadScene("Scene_Test1");
         GlobalController.newScore = 0;
+        Controller_Test1.numHoles = 30;
+        Controller_Test1.timeMultiplier = 1;
+        SceneManager.LoadScene("Scene_Test1");
     }
     
     public void Test2() {
-        SceneManager.LoadScene("Scene_Test2");
         GlobalController.newScore = 0;
+        SceneManager.LoadScene("Scene_Test2");
     }
     
     public void Test3() {
-        SceneManager.LoadScene("Scene_Test3");
         GlobalController.newScore = 0;
+        SceneManager.LoadScene("Scene_Test3");
     }
     
     public void GoBackToMainMenu() {
@@ -30,6 +33,8 @@ public class UI_TestMenu : MonoBehaviour
     }
 
     void Start() {
+        Screen.orientation = ScreenOrientation.Portrait;
+        
         if(GlobalController.completedTest1)
             test1Status.SetActive(true);
         if(GlobalController.completedTest2)

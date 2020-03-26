@@ -12,7 +12,9 @@ public class UI_FailTest : MonoBehaviour
     public void Restart() {
         GlobalController.newScore = 0;
         switch(GlobalController.fromTest) {
-            case -1: SceneManager.LoadScene("Scene_Test1");
+            case -1: Controller_Test1.numHoles = 30;
+                    Controller_Test1.timeMultiplier = 1;
+                    SceneManager.LoadScene("Scene_Test1");
                 break;
             case -2: SceneManager.LoadScene("Scene_Test2");
                 break;

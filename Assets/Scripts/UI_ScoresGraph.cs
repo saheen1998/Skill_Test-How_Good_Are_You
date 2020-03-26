@@ -12,7 +12,12 @@ public class UI_ScoresGraph : MonoBehaviour
     public Sprite cnSprite;
     public Sprite lineSprite;
     public RectTransform graphContainer;
+    public GameObject infoText;
+    public Text topText;
+    public Text middleText;
 
+    private Text infoTextComp;
+    private Color c;
     private float height;
     private float width;
     private float ymax = 100f;
@@ -20,6 +25,9 @@ public class UI_ScoresGraph : MonoBehaviour
 
     //private List<double> forces;
     private int count;
+
+    private List<GameObject> points = new List<GameObject>();
+    private List<GameObject> cns = new List<GameObject>();
 
     private void Awake() {
 
@@ -36,13 +44,25 @@ public class UI_ScoresGraph : MonoBehaviour
 
     void Start() {
         height = graphContainer.rect.height;
-        width = graphContainer.rect.width;
-        Debug.Log(height + ", " + width);
+        width = graphContainer.rect.width - 10;
+        //Debug.Log(height + ", " + width);
 
-        List<int> scores = new List<int>();
-        for(int i = 0; i < 10; i++)
-            scores.Add(UnityEngine.Random.Range(0, 100));
+        infoTextComp = infoText.transform.GetChild(0).GetComponent<Text>();
+        c = infoTextComp.color;
+
+        List<int> scores = GlobalController.GetScores(1);
         ShowGraph(scores);
+    }
+
+    void FixedUpdate() {
+        if(infoText.active == true && infoTextComp.color.a > 0){
+            c.a -= 0.005f;
+            infoTextComp.color = c;
+        } else {
+            c.a = 1;
+            infoTextComp.color = c;
+            infoText.SetActive(false);
+        }
     }
 
     void PlotPoint(Vector2 pos){
@@ -50,11 +70,13 @@ public class UI_ScoresGraph : MonoBehaviour
         pt.transform.SetParent(graphContainer, false);
         pt.gameObject.tag = "Graph Point";
         pt.GetComponent<Image>().sprite = ptSprite;
+        pt.GetComponent<Image>().color = Color.cyan;
         RectTransform ptRect= pt.GetComponent<RectTransform>();
+        points.Add(pt);
         ptRect.anchoredPosition = pos;
         ptRect.sizeDelta = new Vector2(3, 3);
-        ptRect.anchorMin = new Vector2(0, 0);
-        ptRect.anchorMax = new Vector2(0, 0);
+        ptRect.anchorMin = new Vector2(0.02f, 0);
+        ptRect.anchorMax = new Vector2(0.02f, 0);
     }
 
     void PlotConnection(Vector2 pos1, Vector2 pos2){
@@ -62,22 +84,29 @@ public class UI_ScoresGraph : MonoBehaviour
         cn.transform.SetParent(graphContainer, false);
         cn.gameObject.tag = "Graph Point";
         //cn.GetComponent<Image>().sprite = cnSprite;
+        cn.GetComponent<Image>().color = Color.cyan;
         RectTransform cnRect= cn.GetComponent<RectTransform>();
+        cns.Add(cn);
 
         Vector2 dir = (pos2 - pos1).normalized;
         float dist = Vector2.Distance(pos1, pos2);
 
         cnRect.anchoredPosition = pos1 + dir * dist * 0.5f;
         cnRect.sizeDelta = new Vector2(dist, 2);
-        cnRect.anchorMin = new Vector2(0, 0);
-        cnRect.anchorMax = new Vector2(0, 0);
+        cnRect.anchorMin = new Vector2(0.02f, 0);
+        cnRect.anchorMax = new Vector2(0.02f, 0);
         cnRect.localEulerAngles = new Vector3(0, 0, Mathf.Atan2(pos2.y - pos1.y, pos2.x - pos1.x) * 180 / Mathf.PI);
     }
 
-    public void ShowGraph(List<int> val){
+    void ShowGraph(List<int> val){
         //forces = new List<double>(val);
+        if(val.Count == 0)
+            return;
         count = val.Count;
         ymax = 1.1f * Mathf.Max( Mathf.Abs((float)val.Max()), Mathf.Abs((float)val.Min()) );
+
+        topText.text = ymax.ToString("F0");
+        middleText.text = (ymax / 2).ToString("F0");
 
         float xPos =  0;
         float yPos = (float)val[0] / ymax * height;
@@ -95,13 +124,41 @@ public class UI_ScoresGraph : MonoBehaviour
             prevPt = currPt;
         }
     }
+
+    public void ChooseGraph(int idx) {
+        
+        foreach (GameObject g in points)
+        {
+            Destroy(g);
+        }
+
+        foreach (GameObject g in cns)
+        {
+            Destroy(g);
+        }
+        
+        switch(idx) {
+            case 0: ShowGraph(GlobalController.GetScores(1));
+                    break;
+            case 1: ShowGraph(GlobalController.GetScores(2));
+                    break;
+            case 2: ShowGraph(GlobalController.GetScores(3));
+                    break;
+        }
+    }
     
-    public void GoToScoresCalendar() {
-        SceneManager.LoadScene("Scores_Calendar");
+    public void GoToScoresCurrent() {
+        SceneManager.LoadScene("Scores_CurrentSession");
     }
     
     public void GoToScoresLeaderboard() {
-        SceneManager.LoadScene("Scores_Leaderboard");
+        if(GlobalController.currUser != "GUEST")
+            PlayGamesController.ShowLeaderboardUI();
+        else {
+            infoText.SetActive(true);
+            c.a = 1;
+            infoTextComp.color = c;
+        }
     }
 
     public void GoBackToMainMenu() {

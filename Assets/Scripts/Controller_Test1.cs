@@ -13,17 +13,20 @@ public class Controller_Test1 : MonoBehaviour
     public Text scoreText;
 
     public int currScore = 0;
+    public static int numHoles = 60;
+    public static float timeMultiplier = 1; 
     
     void Start()
     {
-        for(int i = 0; i < 30; i++)
-            Instantiate(holePrefab, new Vector3(Random.Range(-8.5f, 8.5f), 0.5f, Random.Range(-16.5f, 15f)), Quaternion.identity);
+        Debug.Log(numHoles);
+        for(int i = 0; i < numHoles; i++)
+            Instantiate(holePrefab, new Vector3(Random.Range(-8.5f, 8.5f), 0, Random.Range(-16.5f, 15f)), Quaternion.identity);
     }
 
     void Update()
     {
 
-        currScore = (int)Mathf.Clamp(100 - Time.timeSinceLevelLoad*5, 0, 100);
+        currScore = (int)Mathf.Clamp(100 - Time.timeSinceLevelLoad * 5 * timeMultiplier, 0, 100);
         scoreText.text = GlobalController.newScore.ToString();
         timeText.text = currScore.ToString();
         //Debug.Log(Input.GetAxis("Horizontal")*Time.deltaTime + ", " + Input.GetAxis("Vertical")*Time.deltaTime);
@@ -33,11 +36,12 @@ public class Controller_Test1 : MonoBehaviour
         if (Application.isEditor)
             player.AddForce(Input.GetAxis("Horizontal")*playerSpeed, 0 , Input.GetAxis("Vertical")*playerSpeed);
         else
-            player.AddForce(Input.acceleration.x*playerSpeed*10, 0 , Input.acceleration.y*playerSpeed*10);
+            player.AddForce(Input.acceleration.x*playerSpeed*8, 0 , Input.acceleration.y*playerSpeed*8);
     }
 
     public void RestartLevel() {
         GlobalController.newScore = 0;
+        numHoles = 30;
         SceneManager.LoadScene("Scene_Test1");
     }
 
@@ -47,6 +51,10 @@ public class Controller_Test1 : MonoBehaviour
 
     void OnTriggerEnter() {
         GlobalController.newScore += currScore;
+        numHoles += 3;
+        numHoles = Mathf.Clamp(numHoles, 30, 70);
+        timeMultiplier -= 0.05f;
+        timeMultiplier = Mathf.Clamp(timeMultiplier, 0.2f, 1);
         SceneManager.LoadScene("Scene_Test1");
     }
 }
