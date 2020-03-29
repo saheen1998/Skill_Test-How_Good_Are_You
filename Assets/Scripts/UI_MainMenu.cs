@@ -21,4 +21,10 @@ public class UI_MainMenu : MonoBehaviour
     public void ChangeUser() {
         SceneManager.LoadScene("Scene_SignIn");
     }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Application.Quit();
+        }
+    }
 }

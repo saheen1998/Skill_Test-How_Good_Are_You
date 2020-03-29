@@ -22,4 +22,10 @@ public class UI_FailTest : MonoBehaviour
                 break;
         }
     }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            GoBack();
+        }
+    }
 }

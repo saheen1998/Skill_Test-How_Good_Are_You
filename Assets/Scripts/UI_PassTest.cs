@@ -53,4 +53,10 @@ public class UI_PassTest : MonoBehaviour
                 break;
         }
     }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            GoBack();
+        }
+    }
 }

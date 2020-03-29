@@ -43,7 +43,7 @@ public class UI_ScoresGraph : MonoBehaviour
     }
 
     void Start() {
-        height = graphContainer.rect.height;
+        height = graphContainer.rect.height - 10;
         width = graphContainer.rect.width - 10;
         //Debug.Log(height + ", " + width);
 
@@ -54,8 +54,14 @@ public class UI_ScoresGraph : MonoBehaviour
         ShowGraph(scores);
     }
 
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            GoBackToMainMenu();
+        }
+    }
+
     void FixedUpdate() {
-        if(infoText.active == true && infoTextComp.color.a > 0){
+        if(infoText.activeSelf == true && infoTextComp.color.a > 0){
             c.a -= 0.005f;
             infoTextComp.color = c;
         } else {
@@ -75,8 +81,8 @@ public class UI_ScoresGraph : MonoBehaviour
         points.Add(pt);
         ptRect.anchoredPosition = pos;
         ptRect.sizeDelta = new Vector2(3, 3);
-        ptRect.anchorMin = new Vector2(0.02f, 0);
-        ptRect.anchorMax = new Vector2(0.02f, 0);
+        ptRect.anchorMin = new Vector2(0.02f, 0.02f);
+        ptRect.anchorMax = new Vector2(0.02f, 0.02f);
     }
 
     void PlotConnection(Vector2 pos1, Vector2 pos2){
@@ -93,8 +99,8 @@ public class UI_ScoresGraph : MonoBehaviour
 
         cnRect.anchoredPosition = pos1 + dir * dist * 0.5f;
         cnRect.sizeDelta = new Vector2(dist, 2);
-        cnRect.anchorMin = new Vector2(0.02f, 0);
-        cnRect.anchorMax = new Vector2(0.02f, 0);
+        cnRect.anchorMin = new Vector2(0.02f, 0.02f);
+        cnRect.anchorMax = new Vector2(0.02f, 0.02f);
         cnRect.localEulerAngles = new Vector3(0, 0, Mathf.Atan2(pos2.y - pos1.y, pos2.x - pos1.x) * 180 / Mathf.PI);
     }
 

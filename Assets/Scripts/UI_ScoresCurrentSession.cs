@@ -30,13 +30,19 @@ public class UI_ScoresCurrentSession : MonoBehaviour
     }
 
     void FixedUpdate() {
-        if(infoText.active == true && infoTextComp.color.a > 0){
+        if(infoText.activeSelf == true && infoTextComp.color.a > 0){
             c.a -= 0.005f;
             infoTextComp.color = c;
         } else {
             c.a = 1;
             infoTextComp.color = c;
             infoText.SetActive(false);
+        }
+    }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            GoBackToMainMenu();
         }
     }
 

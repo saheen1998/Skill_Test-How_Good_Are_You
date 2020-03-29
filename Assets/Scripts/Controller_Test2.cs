@@ -27,11 +27,22 @@ public class Controller_Test2 : MonoBehaviour
 
     void Update() {
 
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            GoBack();
+        }
+        
         Vector3 pos = player.transform.position;
         pos.y = player.transform.position.y + 2;
         pos.z = player.transform.position.z - 6.5f;
         mainCamera.position = pos;
         groundPlane.position = new Vector3(0, 0, player.transform.position.z + 20);
+
+        time += Time.deltaTime;
+        if(time >= spawnTime) {
+            Instantiate(obstacle, new Vector3(Random.Range(-9.5f, 9.5f), Random.Range(0.5f, 2.5f), player.transform.position.z + 50), Quaternion.identity);
+            time = 0;
+            spawnTime = Random.Range(minTime, maxTime);
+        }
 
         if (Input.GetMouseButtonDown(0))
             if(player.transform.position.y < 0.6f && EventSystem.current.currentSelectedGameObject.name == "Tap Jump")
@@ -52,14 +63,6 @@ public class Controller_Test2 : MonoBehaviour
     void FixedUpdate()
     {
         player.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, 14 * speedMultiplier));
-        
-
-        time += Time.deltaTime;
-        if(time >= spawnTime) {
-            Instantiate(obstacle, new Vector3(Random.Range(-9.5f, 9.5f), Random.Range(0.5f, 2.5f), player.transform.position.z + 50), Quaternion.identity);
-            time = 0;
-            spawnTime = Random.Range(minTime, maxTime);
-        }
         
         if (Input.GetMouseButton(0))
         {

@@ -40,6 +40,11 @@ public class Controller_Test3 : MonoBehaviour
     void Start()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
+        Screen.autorotateToLandscapeRight = true;
+        Screen.autorotateToLandscapeLeft = true;
+        Screen.autorotateToPortrait = false;
+        Screen.autorotateToPortraitUpsideDown = false;
+        Screen.orientation = ScreenOrientation.AutoRotation;
         GlobalController.newScore = 0;
         spawnTime = Random.Range(minTime, maxTime);
         time = 0;
@@ -48,6 +53,10 @@ public class Controller_Test3 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            GoBack();
+        }
+        
         //Left Player
         groundPlaneLeft.position = new Vector3(0, 0, playerLeft.transform.position.z + 20);
 
@@ -60,7 +69,7 @@ public class Controller_Test3 : MonoBehaviour
         maxTime -= change;
         maxTime = Mathf.Clamp(maxTime, 0.3f, 10);
         speedMultiplier += change;
-        speedMultiplier = Mathf.Clamp(speedMultiplier, 1, 4);
+        speedMultiplier = Mathf.Clamp(speedMultiplier, 1, 3);
 
         scoreText.text = GlobalController.newScore.ToString();
 

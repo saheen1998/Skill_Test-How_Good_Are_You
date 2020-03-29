@@ -952,7 +952,7 @@ MonoBehaviour:
   m_OnSelect:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 958837919}
+      - m_Target: {fileID: 0}
         m_MethodName: EnterText
         m_Mode: 1
         m_Arguments:
@@ -1269,7 +1269,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 958837920}
-  - component: {fileID: 958837919}
   - component: {fileID: 958837922}
   - component: {fileID: 958837921}
   m_Layer: 5
@@ -1279,22 +1278,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &958837919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 958837918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efbde4230a9a5cc48b9b18b2940e26db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  usernameField: {fileID: 2127203202}
-  passwordField: {fileID: 801278169}
-  mainText: {fileID: 900190647}
-  usernameText: {fileID: 1033988273}
 --- !u!224 &958837920
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2536,7 +2519,7 @@ MonoBehaviour:
   m_OnSelect:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 958837919}
+      - m_Target: {fileID: 0}
         m_MethodName: EnterText
         m_Mode: 1
         m_Arguments:

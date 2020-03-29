@@ -18,7 +18,6 @@ public class Controller_Test1 : MonoBehaviour
     
     void Start()
     {
-        Debug.Log(numHoles);
         for(int i = 0; i < numHoles; i++)
             Instantiate(holePrefab, new Vector3(Random.Range(-8.5f, 8.5f), 0, Random.Range(-16.5f, 15f)), Quaternion.identity);
     }
@@ -26,6 +25,10 @@ public class Controller_Test1 : MonoBehaviour
     void Update()
     {
 
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            GoBack();
+        }
+        
         currScore = (int)Mathf.Clamp(100 - Time.timeSinceLevelLoad * 5 * timeMultiplier, 0, 100);
         scoreText.text = GlobalController.newScore.ToString();
         timeText.text = currScore.ToString();
