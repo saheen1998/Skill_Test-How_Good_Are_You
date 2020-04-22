@@ -1091,7 +1091,7 @@ MonoBehaviour:
     type: 3}
   obstacleRight: {fileID: 6552898128085470480, guid: 1cb559b35d915c240ac0ae0e7ed13f0e,
     type: 3}
-  obstacleEnemy: {fileID: 6552898128085470480, guid: 3c8e20f0ecd8b6c4cadffc1c2e2c5746,
+  obstacleEnemy: {fileID: 3410636127265284391, guid: 410fb8f4206ec2f4b8904ad08dbfa82b,
     type: 3}
   leftWalls:
   - {fileID: 1477805741}
