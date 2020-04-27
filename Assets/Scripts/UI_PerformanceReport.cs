@@ -8,9 +8,33 @@ using UnityEngine.SceneManagement;
 public class UI_PerformanceReport : MonoBehaviour
 {
     public Text reportText;
+    public GameObject infoText;
+
+    private Text infoTextComp;
+    private Color c;
 
     void Start() {
         StartCoroutine(GetReport());
+
+        infoTextComp = infoText.transform.GetChild(0).GetComponent<Text>();
+        c = infoTextComp.color;
+
+        if(GlobalController.currUser == "GUEST"){
+            infoText.SetActive(true);
+            c.a = 1;
+            infoTextComp.color = c;
+        }
+    }
+    
+    void FixedUpdate() {
+        if(infoText.activeSelf == true && infoTextComp.color.a > 0){
+            c.a -= 0.01f;
+            infoTextComp.color = c;
+        } else {
+            c.a = 1;
+            infoTextComp.color = c;
+            infoText.SetActive(false);
+        }
     }
     
     IEnumerator GetReport(){
@@ -35,10 +59,33 @@ public class UI_PerformanceReport : MonoBehaviour
             else
                 reportStr += "Your performance in test 1 has been consistent with your previous attempts.";
         }
-        long avgScore1 = PlayGamesController.GetAvgScore1(this);
-        yield return new WaitForSeconds(2f);
-        if(avgScore1 != -1)
-            reportStr += "\nThe average high score around your high score is " + avgScore1;
+        yield return this.StartCoroutine(PlayGamesController.GetLeaderboardScores( 1,
+            (scores) => {
+                if(scores[0] != -1 && scores[1] != -1 && scores[2] != -1) {
+                    
+                    reportStr += "\nThe average high score around your high score of " + scores[0] + " is " + scores[1] + ".";
+
+                    float percent = scores[0] / (float)scores[2];
+                    if(percent > 0.8f)
+                        reportStr += "\nAccording to your high score your hand-eye coordination is excellent! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else if(percent > 0.6f)
+                        reportStr += "\nAccording to your high score your hand-eye coordination is good! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else if(percent > 0.4f)
+                        reportStr += "\nAccording to your high score your hand-eye coordination is average! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else
+                        reportStr += "\nAccording to your high score your hand-eye coordination is below average! Your percentile is " + (percent * 100).ToString("F0") + "!";
+
+                    percent = GlobalController.scoreTest1 / (float)scores[2];
+                    if(percent > 0.8f)
+                        reportStr += "\nAccording to your most recent score your hand-eye coordination is excellent! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else if(percent > 0.6f)
+                        reportStr += "\nAccording to your most recent score your hand-eye coordination is good! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else if(percent > 0.4f)
+                        reportStr += "\nAccording to your most recent score your hand-eye coordination is average! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else
+                        reportStr += "\nAccording to your most recent score your hand-eye coordination is below average! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                }
+            }));
         
         // For Test 2
         List<int> prevScores2 = GlobalController.GetPrevScoresTest2();
@@ -59,9 +106,33 @@ public class UI_PerformanceReport : MonoBehaviour
             else
                 reportStr += "\n\nYour performance in test 2 has been consistent with your previous attempts.";
         }
-        /*long avgScore2 = PlayGamesController.GetLeaderboardScores2();
-        if(avgScore2 != -1)
-            reportStr += "\nThe average high score around your high score is" + avgScore2;*/
+        yield return this.StartCoroutine(PlayGamesController.GetLeaderboardScores( 2,
+            (scores) => {
+                if(scores[0] != -1 && scores[1] != -1 && scores[2] != -1) {
+                    
+                    reportStr += "\nThe average high score around your high score of " + scores[0] + " is " + scores[1] + ".";
+
+                    float percent = scores[0] / (float)scores[2];
+                    if(percent > 0.8f)
+                        reportStr += "\nAccording to your high score your reaction time is excellent! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else if(percent > 0.6f)
+                        reportStr += "\nAccording to your high score your reaction time is good! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else if(percent > 0.4f)
+                        reportStr += "\nAccording to your high score your reaction time is average! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else
+                        reportStr += "\nAccording to your high score your reaction time is below average! Your percentile is " + (percent * 100).ToString("F0") + "!";
+
+                    percent = GlobalController.scoreTest2 / (float)scores[2];
+                    if(percent > 0.8f)
+                        reportStr += "\nAccording to your most recent score your reaction time is excellent! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else if(percent > 0.6f)
+                        reportStr += "\nAccording to your most recent score your reaction time is good! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else if(percent > 0.4f)
+                        reportStr += "\nAccording to your most recent score your reaction time is average! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else
+                        reportStr += "\nAccording to your most recent score your reaction time is below average! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                }
+            }));
 
         // For Test 3
         List<int> prevScores3 = GlobalController.GetPrevScoresTest3();
@@ -82,15 +153,43 @@ public class UI_PerformanceReport : MonoBehaviour
             else
                 reportStr += "\n\nYour performance in test 3 has been consistent with your previous attempts.";
         }
-        /*long avgScore3 = PlayGamesController.GetLeaderboardScores3();
-        if(avgScore3 != -1)
-            reportStr += "\nThe average high score around your high score is" + avgScore3;*/
+        yield return this.StartCoroutine(PlayGamesController.GetLeaderboardScores( 3,
+            (scores) => {
+                if(scores[0] != -1 && scores[1] != -1 && scores[2] != -1) {
+                    
+                    reportStr += "\nThe average high score around your high score of " + scores[0] + " is " + scores[1] + ".";
+
+                    float percent = scores[0] / (float)scores[2];
+                    if(percent > 0.8f)
+                        reportStr += "\nAccording to your high score your multi-tasking skill is excellent! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else if(percent > 0.6f)
+                        reportStr += "\nAccording to your high score your multi-tasking skill is good! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else if(percent > 0.4f)
+                        reportStr += "\nAccording to your high score your multi-tasking skill is average! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else
+                        reportStr += "\nAccording to your high score your multi-tasking skill is below average! Your percentile is " + (percent * 100).ToString("F0") + "!";
+
+                    percent = GlobalController.scoreTest3 / (float)scores[2];
+                    if(percent > 0.8f)
+                        reportStr += "\nAccording to your most recent score your multi-tasking skill is excellent! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else if(percent > 0.6f)
+                        reportStr += "\nAccording to your most recent score your multi-tasking skill is good! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else if(percent > 0.4f)
+                        reportStr += "\nAccording to your most recent score your multi-tasking skill is average! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                    else
+                        reportStr += "\nAccording to your most recent score your multi-tasking skill is below average! Your percentile is " + (percent * 100).ToString("F0") + "!";
+                }
+            }));
 
         reportText.text = reportStr.ToString();
     }
 
     public void GoBack() {
         SceneManager.LoadScene("Scene_TestMenu");
+    }
+
+    public void ViewScores() {
+        SceneManager.LoadScene("Scores_CurrentSession");
     }
 
     void Update() {

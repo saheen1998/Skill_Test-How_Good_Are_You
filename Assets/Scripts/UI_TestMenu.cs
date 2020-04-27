@@ -46,8 +46,8 @@ public class UI_TestMenu : MonoBehaviour
         if(GlobalController.completedTest3)
             test3Status.SetActive(true);
 
-        /*if(GlobalController.completedTest1 && GlobalController.completedTest2 && GlobalController.completedTest3)
-            performanceReportButton.interactable = true;*/
+        if(GlobalController.completedTest1 && GlobalController.completedTest2 && GlobalController.completedTest3)
+            performanceReportButton.interactable = true;
     }
 
     void Update() {

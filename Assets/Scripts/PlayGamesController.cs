@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,10 +14,6 @@ public class PlayGamesController : MonoBehaviour {
     public Text mainText;
     public Button signOutButton;
     public Text usernameText;
-
-    private static long avgScore1 = 0;
-    private static long avgScore2 = 0;
-    private static long avgScore3 = 0;
 
     void Awake() {
 
@@ -116,99 +113,60 @@ public class PlayGamesController : MonoBehaviour {
         Social.ShowLeaderboardUI();
     }
 
-    public static long GetAvgScore1(MonoBehaviour instance) {
-        instance.StartCoroutine(GetLeaderboardScores1());
-        return avgScore1;
-    }
+    public static IEnumerator GetLeaderboardScores(int leaderboardNo, Action<List<long>> onSuccess) {
 
-    static IEnumerator GetLeaderboardScores1() {
-
-        string mStatus;
+        List<long> ret = new List<long>();
         long avgScore = -1;
+        long playerScore = -1;
+        long topScore = -1;
+        string leaderboardId = "";
 
-        PlayGamesPlatform.Instance.LoadScores("CgkIx9zkzusWEAIQBA",LeaderboardStart.PlayerCentered,10,LeaderboardCollection.Public,LeaderboardTimeSpan.AllTime,
+        switch(leaderboardNo) {
+            case 1: leaderboardId = "CgkIx9zkzusWEAIQBA";
+                    break;
+            case 2: leaderboardId = "CgkIx9zkzusWEAIQAQ";
+                    break;
+            case 3: leaderboardId = "CgkIx9zkzusWEAIQBQ";
+                    break;
+        }
+
+        PlayGamesPlatform.Instance.LoadScores(leaderboardId, LeaderboardStart.PlayerCentered,10,LeaderboardCollection.Public,LeaderboardTimeSpan.AllTime,
             (data) =>
             {
                 if (!data.Valid)
                     avgScore = -1;
                 else {
                     foreach (var item in data.Scores) {
-                        Debug.LogWarning("Score: " + item.value);
+                        //Debug.LogWarning("Score1: " + item.value);
                         avgScore += item.value;
                     }
                     avgScore /= data.Scores.Length;
                 }
-                Debug.LogWarning("Average Score: " + avgScore);
-                Debug.Log (data.PlayerScore);
-                Debug.Log (data.PlayerScore.userID);
+                playerScore = data.PlayerScore.value;
+                /*Debug.LogWarning("Average Score: " + avgScore);
+                Debug.Log (data.PlayerScore.userID);*/
                 //Debug.Log (data.PlayerScore.formattedValue);
+            }
+        );
+
+        PlayGamesPlatform.Instance.LoadScores(leaderboardId, LeaderboardStart.TopScores,1,LeaderboardCollection.Public,LeaderboardTimeSpan.AllTime,
+            (data) =>
+            {
+                if (!data.Valid)
+                    topScore = -1;
+                else {
+                    topScore = data.Scores[0].value;
+                }
+                Debug.Log(data.Scores[0].value);
             }
         );
 
         yield return new WaitForSeconds(2f);
 
-        avgScore1 = avgScore;
+        ret.Add(playerScore);
+        ret.Add(avgScore);
+        ret.Add(topScore);
+
+        onSuccess(ret);
     }
-    /*
-    public static long GetLeaderboardScores2() {
-
-        string mStatus;
-        IScore[] scores = new IScore[];
-        long avgScore = 0;
-
-        PlayGamesPlatform.Instance.LoadScores("CgkIx9zkzusWEAIQAQ",LeaderboardStart.PlayerCentered,10,LeaderboardCollection.Public,LeaderboardTimeSpan.AllTime,
-            (data) =>
-            {
-                if (!data.Valid)
-                    avgScore = -1;
-                scores = data.Scores;
-                Debug.LogWarning("Average Score: " + avgScore);
-                Debug.Log (data.PlayerScore);
-                Debug.Log (data.PlayerScore.userID);
-                //Debug.Log (data.PlayerScore.formattedValue);
-            }
-        );
-
-        if(avgScore == -1)
-            return -1;
-
-        foreach (var item in scores) {
-            Debug.LogWarning("Score: " + item.value);
-            avgScore += item.value;
-        }
-        avgScore /= scores.Length;
-
-        return avgScore;
-    }
-    
-    public static long GetLeaderboardScores3() {
-
-        string mStatus;
-        IScore[] scores = new IScore[];
-        long avgScore = 0;
-
-        PlayGamesPlatform.Instance.LoadScores("CgkIx9zkzusWEAIQBQ",LeaderboardStart.PlayerCentered,10,LeaderboardCollection.Public,LeaderboardTimeSpan.AllTime,
-            (data) =>
-            {
-                if (!data.Valid)
-                    avgScore = -1;
-                scores = data.Scores;
-                Debug.LogWarning("Average Score: " + avgScore);
-                Debug.Log (data.PlayerScore);
-                Debug.Log (data.PlayerScore.userID);
-                //Debug.Log (data.PlayerScore.formattedValue);
-            }
-        );
-
-        if(avgScore == -1)
-            return -1;
-
-        foreach (var item in scores) {
-            Debug.LogWarning("Score: " + item.value);
-            avgScore += item.value;
-        }
-        avgScore /= scores.Length;
-
-        return avgScore;
-    }*/
 }
