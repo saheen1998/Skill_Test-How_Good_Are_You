@@ -32,6 +32,10 @@ public class UI_TestMenu : MonoBehaviour
         SceneManager.LoadScene("Scene_MainMenu");
     }
 
+    public void GoToPerformanceReport() {
+        SceneManager.LoadScene("Scene_PerformanceReport");
+    }
+
     void Start() {
         Screen.orientation = ScreenOrientation.Portrait;
         

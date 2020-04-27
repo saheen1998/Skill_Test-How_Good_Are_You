@@ -44,6 +44,25 @@ public static class GlobalController
         PlayerPrefs.SetInt("test1Score10", score);
     }
 
+    public static List<int> GetPrevScoresTest1() {
+        
+        List<int> retScores = new List<int>();
+
+        for(int i = 10; i > 0; --i) {
+            string keyStr = "test1Score" + i;
+            if(PlayerPrefs.HasKey(keyStr)) {
+                retScores.Add(PlayerPrefs.GetInt("test1Score" + i));
+                if(PlayerPrefs.HasKey("test1Score" + (i-1)))
+                    retScores.Add(PlayerPrefs.GetInt("test1Score" + (i-1)));
+                if(PlayerPrefs.HasKey("test1Score" + (i-2)))
+                    retScores.Add(PlayerPrefs.GetInt("test1Score" + (i-2)));
+                break;
+            }
+        }
+
+        return retScores;
+    }
+
     public static void AddNewScoreTest2(int score) {
         completedTest2 = true;
         scoreTest2 = score;
@@ -66,6 +85,25 @@ public static class GlobalController
             PlayerPrefs.SetInt(keyStr1, PlayerPrefs.GetInt(keyStr2));
         }
         PlayerPrefs.SetInt("test2Score10", score);
+    }
+    
+    public static List<int> GetPrevScoresTest2() {
+        
+        List<int> retScores = new List<int>();
+
+        for(int i = 10; i > 0; --i) {
+            string keyStr = "test2Score" + i;
+            if(PlayerPrefs.HasKey(keyStr)) {
+                retScores.Add(PlayerPrefs.GetInt("test2Score" + i));
+                if(PlayerPrefs.HasKey("test2Score" + (i-1)))
+                    retScores.Add(PlayerPrefs.GetInt("test2Score" + (i-1)));
+                if(PlayerPrefs.HasKey("test2Score" + (i-2)))
+                    retScores.Add(PlayerPrefs.GetInt("test2Score" + (i-2)));
+                break;
+            }
+        }
+
+        return retScores;
     }
 
     public static void AddNewScoreTest3(int score) {
@@ -90,6 +128,25 @@ public static class GlobalController
             PlayerPrefs.SetInt(keyStr1, PlayerPrefs.GetInt(keyStr2));
         }
         PlayerPrefs.SetInt("test3Score10", score);
+    }
+
+    public static List<int> GetPrevScoresTest3() {
+        
+        List<int> retScores = new List<int>();
+
+        for(int i = 10; i > 0; --i) {
+            string keyStr = "test3Score" + i;
+            if(PlayerPrefs.HasKey(keyStr)) {
+                retScores.Add(PlayerPrefs.GetInt("test3Score" + i));
+                if(PlayerPrefs.HasKey("test3Score" + (i-1)))
+                    retScores.Add(PlayerPrefs.GetInt("test3Score" + (i-1)));
+                if(PlayerPrefs.HasKey("test3Score" + (i-2)))
+                    retScores.Add(PlayerPrefs.GetInt("test3Score" + (i-2)));
+                break;
+            }
+        }
+
+        return retScores;
     }
 
     public static List<int> GetScores(int testNo) {

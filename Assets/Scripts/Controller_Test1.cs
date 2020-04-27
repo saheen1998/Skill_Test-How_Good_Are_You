@@ -13,7 +13,7 @@ public class Controller_Test1 : MonoBehaviour
     public Text scoreText;
 
     public int currScore = 0;
-    public static int numHoles = 60;
+    public static int numHoles = 30;
     public static float timeMultiplier = 1; 
     
     void Start()
